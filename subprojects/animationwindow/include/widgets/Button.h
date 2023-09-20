@@ -24,7 +24,5 @@ namespace TDT4102 {
         void setButtonColor(Color newColor) {buttonColor = nk_color{(nk_byte)newColor.redChannel, (nk_byte)newColor.greenChannel, (nk_byte)newColor.blueChannel, (nk_byte)newColor.alphaChannel};}
         void setButtonColorHover(Color newColor) {buttonColorHover = nk_color{(nk_byte)newColor.redChannel, (nk_byte)newColor.greenChannel, (nk_byte)newColor.blueChannel, (nk_byte)newColor.alphaChannel};}
         void setButtonColorActive(Color newColor) {buttonColorActive = nk_color{(nk_byte)newColor.redChannel, (nk_byte)newColor.greenChannel, (nk_byte)newColor.blueChannel, (nk_byte)newColor.alphaChannel};}
-    
-        void setButtonColorDefault() {buttonColor = nk_rgba(50,50,50,255);}
     };
 }

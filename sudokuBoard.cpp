@@ -14,6 +14,8 @@ SudokuBoard::SudokuBoard(int x, int y, int width, int height) :
             newTile->setCallback(std::bind(&SudokuBoard::cb_click, this)); /*Ensures that each 
             tile is possible to click and that values are updated when clicked*/
 
+            newTile->setButtonColor(TDT4102::Color::alice_blue);
+            
             add(*newTile); //Adds the tile to the window
             row.emplace_back(newTile); //Adds the tile to the matrix
 
@@ -53,6 +55,8 @@ SudokuBoard::SudokuBoard(int x, int y, int width, int height) :
             newBtn->setCallback(std::bind(&SudokuBoard::cb_update_fill, this)); /*Ensures that the current
             fillValue is updated when we click the button*/
 
+            newBtn->setButtonColor(TDT4102::Color::alice_blue);
+
             fillButtons.emplace_back(newBtn);
             add(*newBtn); //Adds the button to the window
             i++;
@@ -80,15 +84,15 @@ SudokuBoard::SudokuBoard(int x, int y, int width, int height) :
 
    /*The rest of the function fills in a default, correctly solved board*/
    /*
-   vector<int> numbers{8,2,7,1,5,4,3,9,6,
-   9,6,5,3,2,7,1,4,8,
-   3,4,1,6,8,9,7,5,2,
-   5,9,3,4,6,8,2,7,1,
-   4,7,2,5,1,3,6,8,9,
-   6,1,8,9,7,2,4,3,5,
-   7,8,6,2,3,5,9,1,4,
-   1,5,4,7,9,6,8,2,3,
-   2,3,9,8,4,1,5,6,7};
+   vector<int> numbers{5,3,0,0,7,0,0,0,0,
+   6,0,0,1,9,5,0,0,0,
+   0,9,8,0,0,0,0,6,0,
+   8,0,0,0,6,0,0,0,3,
+   4,0,0,8,0,3,0,0,1,
+   7,0,0,0,2,0,0,0,6,
+   0,6,0,0,0,0,2,8,0,
+   0,0,0,4,1,9,0,0,5,
+   0,0,0,0,8,0,0,7,9};
 
    int count=0;
 
@@ -315,7 +319,7 @@ void SudokuBoard::changeLabelTile(int row, int col) {
                 
             }
             Board.at(row).at(col)->setLabel(newLabel);
-            Board.at(row).at(col)->setLabelColor(TDT4102::Color::white);
+            Board.at(row).at(col)->setLabelColor(TDT4102::Color::black);
         }
     }
 
@@ -345,11 +349,11 @@ void SudokuBoard::update_fill() {
     
     if (newFillValue==currentFillValue) {
         currentFillValue=0;
-        currentButton->setButtonColorDefault();
+        currentButton->setButtonColor(TDT4102::Color::alice_blue);
     }
     else {
         if (currentFillValue!=0) {
-             fillButtons.at(currentFillValue-1)->setButtonColorDefault(); /*Sets the color of the 
+             fillButtons.at(currentFillValue-1)->setButtonColor(TDT4102::Color::alice_blue); /*Sets the color of the 
              last button to the default color because it's now inactive*/
         }
         
@@ -388,12 +392,13 @@ void SudokuBoard::solve() {
     for(int i=0; i<9; i++ ){
         for(int j=0; j<9; j++) {
             board.at(i).at(j) = this->getValue(i, j);
-            cout << board.at(i).at(j) << " ";
         }
-        cout <<endl;
     }
     
     Solver result = Solver(board);
-    
-    cout << "Dette er objektiv-funksjonen" << result.Q() <<endl;
+
+    result.initialize();
+
+    result.solve();
 };
+

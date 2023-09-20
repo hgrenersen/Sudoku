@@ -9,14 +9,34 @@ class Solver {
         vector<vector<int>> board;
 
         vector<vector<int>> solution;
+
+        std::vector<std::vector<bool>> fixed;
+
+        float k = 1;
+
+        float lambda = 0.75;
+
+        std::mt19937 gen;
+        std::uniform_int_distribution<int> distribution;
     public:
         Solver(vector<vector<int>> b);
 
-        int Q();
+        int Q(vector<vector<int>> proposal);
 
-        int ri(int rowIndex);
+        int ri(vector<vector<int>> proposal, int rowIndex);
 
-        int ci(int colIndex);
+        int ci(vector<vector<int>> proposal,int colIndex);
 
+        double f(vector<vector<int>> proposal) {return 1/k*exp(-lambda*Q(proposal));}
+
+        void initialize();
+
+        vector<vector<int>> newProposal();
+
+        vector<vector<int>> swapNumbers(int square, vector<vector<int>> boardToConsider);
+
+        void nextBoard();
+
+        void solve();
 
 };
